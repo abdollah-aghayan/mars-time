@@ -13,16 +13,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class MarsTimeController extends AbstractController
 {
     /**
-     * @Route ("/" , name="index", methods={"GET"})
+     * @Route ("/mars-time" , name="index", methods={"GET"})
      *
      * @param Request $request
      */
     public function index(Request $request, MarsTimeInterface $marsTimeService)
     {
-        $inputDate = $request->get('date', null);
+        $inputDate = $request->get('time', null);
 
         if (!$inputDate) {
-            throw new ValidationException('date can not be empty');
+            throw new ValidationException('time can not be empty');
         }
 
         $format = 'Y-m-d H:i:s';
@@ -30,7 +30,7 @@ class MarsTimeController extends AbstractController
         $date = DateTime::createFromFormat($format, $inputDate);
 
         if (!$date || $date->format($format) !== $inputDate) {
-            throw new ValidationException('date is not acceptable please send date with ' . $format . ' format');
+            throw new ValidationException('time is not acceptable please send valid time with ' . $format . ' format');
         }
 
         return new JsonResponse([
