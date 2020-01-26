@@ -21,7 +21,7 @@ class MarsTimeService implements MarsTimeInterface
         $julianDateUT = MarsTimeInterface::FIXED_NUMBER_JULIAN_DATE + ($millisecond / MarsTimeInterface::NUMBER_OF_DAYS);
 
         /* we need to convert Julian date to second by by adding leap second and divide to the number of seconds in a day */
-        $julianDateTT = $julianDateUT + MarsTimeInterface::LEAP_SECONDS / MarsTimeInterface::SECOND_DAY;
+        $julianDateTT = $julianDateUT + MarsTimeInterface::LEAP_SECONDS / MarsTimeInterface::SECONDS_IN_A_DAY;
 
         /* Time offset since  12:00 on Jan. 1, 2000 (UT) */
         $january2000Time = $julianDateTT - MarsTimeInterface::JANUARY_2000_EPOCH;
@@ -32,7 +32,7 @@ class MarsTimeService implements MarsTimeInterface
         // ratio is day scale in mars and ears
         // msd positive is a number to make start point positive
         // because midnight is not completely aligned this is the adjustment to that
-        return ($startPoint / MarsTimeInterface::DAY_RATIO) + MarsTimeInterface::MSD_POSITIVE - MarsTimeInterface::ADJUSTMENT;
+        return ($startPoint / MarsTimeInterface::MARS_DAY_RATIO) + MarsTimeInterface::MSD_POSITIVE - MarsTimeInterface::ADJUSTMENT;
     }
 
     /**
@@ -47,7 +47,7 @@ class MarsTimeService implements MarsTimeInterface
         $marsSolDate = $this->getMarsSolDate($time);
 
         // Convert Mars Sol Date days to second to get human readable time form that
-        $marsSoleDateSecond = $marsSolDate * MarsTimeInterface::SECOND_DAY;
+        $marsSoleDateSecond = $marsSolDate * MarsTimeInterface::SECONDS_IN_A_DAY;
 
         return date('H:i:s', $marsSoleDateSecond);
     }

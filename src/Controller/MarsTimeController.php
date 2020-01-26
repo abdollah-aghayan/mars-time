@@ -30,7 +30,7 @@ class MarsTimeController extends AbstractController
         $date = DateTime::createFromFormat($format, $inputDate);
 
         if (!$date || $date->format($format) !== $inputDate) {
-            throw new ValidationException('time is not acceptable please send valid time with ' . $format . ' format');
+            throw new ValidationException('time is not acceptable please send a valid time with ' . $format . ' format');
         }
 
         return new JsonResponse([
