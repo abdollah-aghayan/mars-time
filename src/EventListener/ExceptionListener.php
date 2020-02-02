@@ -4,6 +4,7 @@ namespace App\EventListener;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class ExceptionListener
 {
@@ -14,8 +15,8 @@ class ExceptionListener
             'error' => $exception->getMessage(),
         ];
 
-        if ($exception->getCode() < 500 && 0 != $exception->getCode()) {
-            $response = new JsonResponse($body, $exception->getCode());
+        if ($exception instanceof HttpExceptionInterface) {
+            $response = new JsonResponse($body, $exception->getStatusCode());
         } else {
             /* TODO log the exception */
         }
